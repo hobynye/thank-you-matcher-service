@@ -1,0 +1,31 @@
+name: Analysis
+
+on:
+  push:
+    branches: [main, beta, alpha]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  pull-requests: read
+
+jobs:
+  Sonar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Setup'
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: 'Checkout'
+        uses: actions/checkout@v4
+
+      - name: 'Sonar'
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn clean verify sonar:sonar
