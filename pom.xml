@@ -39,10 +39,8 @@
 
         <java.version>17</java.version>
 
-        <maven.wrapper.version>3.2.0</maven.wrapper.version>
-
-        <jacoco.version>0.8.11</jacoco.version>
-
+        <maven.wrapper.version>3.3.1</maven.wrapper.version>
+        <jacoco.version>0.8.12</jacoco.version>
         <sonar.version>3.11.0.3922</sonar.version>
     </properties>
 
@@ -95,9 +93,6 @@
     <profiles>
         <profile>
             <id>coverage</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -115,6 +110,11 @@
                                 <goals>
                                     <goal>report</goal>
                                 </goals>
+                                <configuration>
+                                    <formats>
+                                        <format>XML</format>
+                                    </formats>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
