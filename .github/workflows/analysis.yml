@@ -35,4 +35,5 @@ jobs:
           mvn -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
             -Dsonar.host.url=${{ vars.SONAR_HOST }} \
             -Dsonar.organization=${{ vars.SONAR_ORG }} \
-            -Dsonar.projectKey=${{ vars.SONAR_PROJECT_KEY }}
+            -Dsonar.projectKey=${{ vars.SONAR_PROJECT_KEY }} \
+            -Pcoverage
