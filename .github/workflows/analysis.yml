@@ -28,4 +28,8 @@ jobs:
       - name: 'Sonar'
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn clean verify sonar:sonar
+        run: |
+          mvn clean verify sonar:sonar \
+            -Dsonar.host.url=${{ vars.SONAR_HOST }} \
+            -Dsonar.organization=${{ vars.SONAR_ORG }} \
+            -Dsonar.projectKey=${{ vars.SONAR_PROJECT_KEY }}
