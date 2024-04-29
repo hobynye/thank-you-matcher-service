@@ -15,15 +15,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v4
+
       - name: 'Setup'
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: 'maven'
-
-      - name: 'Checkout'
-        uses: actions/checkout@v4
 
       - name: 'Sonar'
         env:
