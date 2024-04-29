@@ -41,7 +41,7 @@
 
         <maven.wrapper.version>3.2.0</maven.wrapper.version>
 
-        <jacoco.version>0.8.11</jacoco.version>
+        <jacoco.version>0.8.12</jacoco.version>
     </properties>
 
     <dependencies>
