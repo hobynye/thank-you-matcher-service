@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.5</version>
+        <version>3.3.4</version>
         <relativePath/>
     </parent>
 
@@ -39,9 +39,9 @@
 
         <java.version>17</java.version>
 
-        <maven.wrapper.version>3.3.1</maven.wrapper.version>
+        <maven.wrapper.version>3.3.2</maven.wrapper.version>
         <jacoco.version>0.8.12</jacoco.version>
-        <sonar.version>3.11.0.3922</sonar.version>
+        <sonar.version>4.0.0.4121</sonar.version>
     </properties>
 
     <dependencies>
