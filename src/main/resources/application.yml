@@ -6,11 +6,22 @@
 # @  |____/ |_____||_| /_/   \_\\___/ |_____||_|    @
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/thank_you_matcher
-    username: thank-you-matcher-service
-    password: ${POSTGRES_PASSWORD_FILE:thank_you_matcher_password}
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-name: Google
+            client-id: ${GOOGLE_CLIENT_ID:client-id}
+            client-secret: ${GOOGLE_CLIENT_SECRET:client-secret}
+            scope:
+              - openid
+              - profile
+              - email
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
 
+
+---
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # @   ____   _____ __     __  @
 # @  |  _ \ | ____|\ \   / /  @
@@ -18,3 +29,33 @@ spring:
 # @  | |_| || |___   \ V /    @
 # @  |____/ |_____|   \_/     @
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+---
+# @@@@@@@@@@@@@@@@@@@@@@
+# @    ___      _      @
+# @   / _ \    / \     @
+# @  | | | |  / _ \    @
+# @  | |_| | / ___ \   @
+# @   \__\_\/_/   \_\  @
+# @@@@@@@@@@@@@@@@@@@@@@
+spring:
+  config:
+    activate:
+      on-profile: qa
+
+---
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# @   ____   ____    ___   ____    @
+# @  |  _ \ |  _ \  / _ \ |  _ \   @
+# @  | |_) || |_) || | | || | | |  @
+# @  |  __/ |  _ < | |_| || |_| |  @
+# @  |_|    |_| \_\ \___/ |____/   @
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+spring:
+  config:
+    activate:
+      on-profile: prod

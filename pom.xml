@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.3.4</version>
+    <version>3.5.5</version>
     <relativePath/>
   </parent>
 
@@ -47,9 +47,9 @@
 
     <java.version>17</java.version>
 
-    <maven.wrapper.version>3.3.2</maven.wrapper.version>
-    <jacoco.version>0.8.12</jacoco.version>
-    <sonar.version>4.0.0.4121</sonar.version>
+    <maven.wrapper.version>3.3.4</maven.wrapper.version>
+    <jacoco.version>0.8.13</jacoco.version>
+    <sonar.version>5.2.0.4988</sonar.version>
   </properties>
 
   <dependencies>
@@ -66,15 +66,23 @@
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-webflux</artifactId>
+      <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-oauth2-client</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-oauth2-client</artifactId>
+      <artifactId>spring-boot-actuator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-actuator-autoconfigure</artifactId>
     </dependency>
 
     <dependency>
@@ -82,18 +90,13 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>io.projectreactor</groupId>
-      <artifactId>reactor-test</artifactId>
-      <scope>test</scope>
-    </dependency>
 
-    <dependency>
+<!--    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-docker-compose</artifactId>
       <scope>runtime</scope>
       <optional>true</optional>
-    </dependency>
+    </dependency>-->
   </dependencies>
 
   <build>

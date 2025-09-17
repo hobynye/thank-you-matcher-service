@@ -4,36 +4,36 @@ services:
       context: .
       target: development
     ports:
-      - "80:8080"
+      - "8080:8080"
       - "5005:5005"
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+#    depends_on:
+#      db:
+#        condition: service_healthy
+#    environment:
+#      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
     develop:
       watch:
         - action: rebuild
           path: .
-  db:
-    image: postgres
-    restart: always
-    user: postgres
-    secrets:
-      - db-password
-    volumes:
-      - db-data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=thank_you_matcher
-      - POSTGRES_USER=thank-you-matcher-service
-      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
-    ports:
-      - "5432:5432"
-    healthcheck:
-      test: [ "CMD", "pg_isready" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+#  db:
+#    image: postgres
+#    restart: always
+#    user: postgres
+#    secrets:
+#      - db-password
+#    volumes:
+#      - db-data:/var/lib/postgresql/data
+#    environment:
+#      - POSTGRES_DB=thank_you_matcher
+#      - POSTGRES_USER=thank-you-matcher-user
+#      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+#    ports:
+#      - "5432:5432"
+#    healthcheck:
+#      test: [ "CMD", "pg_isready" ]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
 
 volumes:
   db-data:
