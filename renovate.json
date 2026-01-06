@@ -12,10 +12,6 @@
 
   "timezone": "America/New_York",
 
-  "schedule": [
-    "after 9am and before 6pm on weekdays"
-  ],
-
   "labels": [
     "dependencies"
   ],
