@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         test-type: [unit, integration]
 
@@ -45,13 +45,19 @@ jobs:
           SPRING_PROFILES_ACTIVE: test
         run: mvn -B -ntp verify -DskipUnitTests=true jacoco:report-integration
 
-      - name: Upload coverage
+      - name: Upload unit coverage
+        if: matrix.test-type == 'unit'
         uses: actions/upload-artifact@v4
         with:
-          name: jacoco-${{ matrix.test-type }}
-          path: |
-            target/site/jacoco
-            target/site/jacoco-it
+          name: jacoco-unit
+          path: target/site/jacoco
+
+      - name: Upload integration coverage
+        if: matrix.test-type == 'integration'
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-integration
+          path: target/site/jacoco-it
 
   sonar:
     name: Sonar Scan & Quality Gate
