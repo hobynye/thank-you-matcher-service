@@ -37,46 +37,46 @@ jobs:
           REPORT=$(find target/pit-reports -name mutations.xml | head -n 1)
 
           if [ -z "$REPORT" ]; then
-            cat <<EOF > pit-comment.md
-            ### 🧬 Mutation Testing (PIT)
+cat <<EOF > pit-comment.md
+### 🧬 Mutation Testing (PIT)
 
-            ⚠️ PIT report not found.
+⚠️ PIT report not found.
 
-            _Mutation tests may have failed or produced no results._
-            EOF
+_Mutation tests may have failed or produced no results._
+EOF
+      
+      echo "comment<<EOF" >> $GITHUB_OUTPUT
+      cat pit-comment.md >> $GITHUB_OUTPUT
+      echo "EOF" >> $GITHUB_OUTPUT
+      exit 0
+      fi
+      
+      TOTAL=$(grep -o 'status=' "$REPORT" | wc -l)
+      KILLED=$(grep -o 'status="KILLED"' "$REPORT" | wc -l)
+      SURVIVED=$(grep -o 'status="SURVIVED"' "$REPORT" | wc -l)
+      
+      if [ "$TOTAL" -eq 0 ]; then
+      SCORE=0
+      else
+      SCORE=$(( 100 * KILLED / TOTAL ))
+      fi
 
-            echo "comment<<EOF" >> $GITHUB_OUTPUT
-            cat pit-comment.md >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-            exit 0
-          fi
+cat <<EOF > pit-comment.md
+### 🧬 Mutation Testing (PIT)
 
-          TOTAL=$(grep -o 'status=' "$REPORT" | wc -l)
-          KILLED=$(grep -o 'status="KILLED"' "$REPORT" | wc -l)
-          SURVIVED=$(grep -o 'status="SURVIVED"' "$REPORT" | wc -l)
+| Metric | Value |
+|------|------|
+| Total mutations | $TOTAL |
+| Killed | $KILLED |
+| Survived | $SURVIVED |
+| Mutation score | **$SCORE%** |
 
-          if [ "$TOTAL" -eq 0 ]; then
-            SCORE=0
-          else
-            SCORE=$(( 100 * KILLED / TOTAL ))
-          fi
-
-          cat <<EOF > pit-comment.md
-          ### 🧬 Mutation Testing (PIT)
-
-          | Metric | Value |
-          |------|------|
-          | Total mutations | $TOTAL |
-          | Killed | $KILLED |
-          | Survived | $SURVIVED |
-          | Mutation score | **$SCORE%** |
-
-          _Non-blocking. For visibility only._
-          EOF
-
-          echo "comment<<EOF" >> $GITHUB_OUTPUT
-          cat pit-comment.md >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+_Non-blocking. For visibility only._
+EOF
+      
+      echo "comment<<EOF" >> $GITHUB_OUTPUT
+      cat pit-comment.md >> $GITHUB_OUTPUT
+      echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Post PR comment
         if: github.event_name == 'pull_request'
