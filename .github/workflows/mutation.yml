@@ -37,7 +37,17 @@ jobs:
           REPORT=$(find target/pit-reports -name mutations.xml | head -n 1)
 
           if [ -z "$REPORT" ]; then
-            echo "summary=⚠️ PIT report not found" >> $GITHUB_OUTPUT
+            cat <<EOF > pit-comment.md
+            ### 🧬 Mutation Testing (PIT)
+
+            ⚠️ PIT report not found.
+
+            _Mutation tests may have failed or produced no results._
+            EOF
+
+            echo "comment<<EOF" >> $GITHUB_OUTPUT
+            cat pit-comment.md >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
             exit 0
           fi
 
@@ -45,7 +55,11 @@ jobs:
           KILLED=$(grep -o 'status="KILLED"' "$REPORT" | wc -l)
           SURVIVED=$(grep -o 'status="SURVIVED"' "$REPORT" | wc -l)
 
-          SCORE=$(( 100 * KILLED / TOTAL ))
+          if [ "$TOTAL" -eq 0 ]; then
+            SCORE=0
+          else
+            SCORE=$(( 100 * KILLED / TOTAL ))
+          fi
 
           cat <<EOF > pit-comment.md
           ### 🧬 Mutation Testing (PIT)
