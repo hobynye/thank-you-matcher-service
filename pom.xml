@@ -180,9 +180,10 @@
             <avoidCallsTo>org.slf4j</avoidCallsTo>
           </avoidCallsTo>
 
-          <!-- Performance -->
+          <!-- Performance & stability -->
           <threads>4</threads>
-          <timeoutConst>4000</timeoutConst>
+          <timeoutFactor>1.5</timeoutFactor>
+          <timeoutConstant>4000</timeoutConstant>
 
           <!-- Output -->
           <outputFormats>
@@ -194,14 +195,10 @@
           <mutationThreshold>60</mutationThreshold>
           <coverageThreshold>80</coverageThreshold>
 
-          <!-- Don’t mutate tests -->
+          <!-- Exclusions -->
           <excludedClasses>
             <param>**/*Test</param>
             <param>**/*IT</param>
-          </excludedClasses>
-
-          <!-- Avoid Spring config noise -->
-          <excludedClasses>
             <param>**/*Application</param>
             <param>**/*Config</param>
             <param>**/*Configuration</param>
