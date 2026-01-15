@@ -23,6 +23,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+    <skipUnitTests>false</skipUnitTests>
+
     <jacoco.version>0.8.14</jacoco.version>
     <sonar.version>5.5.0.6356</sonar.version>
 
