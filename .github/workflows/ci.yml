@@ -97,7 +97,7 @@ jobs:
           echo "Running Sonar PR analysis"
 
           mvn -B -ntp sonar:sonar \
-            -Dsonar.login=${SONAR_TOKEN} \
+            -Dsonar.token=${SONAR_TOKEN} \
             -Dsonar.host.url=${SONAR_HOST} \
             -Dsonar.organization=${SONAR_ORG} \
             -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
