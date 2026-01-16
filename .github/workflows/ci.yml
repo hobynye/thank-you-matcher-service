@@ -93,13 +93,27 @@ jobs:
           SONAR_HOST: ${{ vars.SONAR_HOST }}
           SONAR_ORG: ${{ vars.SONAR_ORG }}
           SONAR_PROJECT_KEY: ${{ vars.SONAR_PROJECT_KEY }}
+          EVENT_NAME: ${{ github.event_name }}
         run: |
-          mvn -B -ntp sonar:sonar \
-            -Dsonar.login=${{ env.SONAR_TOKEN }} \
-            -Dsonar.host.url=${{ env.SONAR_HOST }} \
-            -Dsonar.organization=${{ env.SONAR_ORG }} \
-            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} \
-            -Dsonar.qualitygate.wait=true \
-            -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
-            -Dsonar.pullrequest.branch=${{ github.head_ref }} \
-            -Dsonar.pullrequest.base=${{ github.base_ref }}
+          if [ "${EVENT_NAME}" = "pull_request" ]; then
+            echo "Running Sonar PR analysis"
+
+            mvn -B -ntp sonar:sonar \
+              -Dsonar.login=${SONAR_TOKEN} \
+              -Dsonar.host.url=${SONAR_HOST} \
+              -Dsonar.organization=${SONAR_ORG} \
+              -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+              -Dsonar.qualitygate.wait=true \
+              -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
+              -Dsonar.pullrequest.branch=${{ github.head_ref }} \
+              -Dsonar.pullrequest.base=${{ github.base_ref }}
+          else
+            echo "Running Sonar branch analysis"
+    
+            mvn -B -ntp sonar:sonar \
+              -Dsonar.login=${SONAR_TOKEN} \
+              -Dsonar.host.url=${SONAR_HOST} \
+              -Dsonar.organization=${SONAR_ORG} \
+              -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+              -Dsonar.qualitygate.wait=true
+            fi
