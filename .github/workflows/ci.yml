@@ -98,7 +98,7 @@ jobs:
             -Dsonar.login=${{ env.SONAR_TOKEN }} \
             -Dsonar.host.url=${{ env.SONAR_HOST }} \
             -Dsonar.organization=${{ env.SONAR_ORG }} \
-            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }}
+            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} \
             -Dsonar.qualitygate.wait=true \
             -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
             -Dsonar.pullrequest.branch=${{ github.head_ref }} \
