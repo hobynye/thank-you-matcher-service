@@ -90,7 +90,7 @@
         <version>${jacoco.version}</version>
         <executions>
 
-          <!-- Attach agent for unit tests -->
+          <!-- Unit tests -->
           <execution>
             <id>prepare-agent</id>
             <goals>
@@ -98,34 +98,28 @@
             </goals>
           </execution>
 
-          <!-- Unit test report -->
           <execution>
             <id>report</id>
             <phase>test</phase>
             <goals>
               <goal>report</goal>
             </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>
-              <formats>
-                <format>XML</format>
-              </formats>
-            </configuration>
           </execution>
 
-          <!-- Integration test report -->
+          <!-- Integration tests -->
+          <execution>
+            <id>prepare-agent-integration</id>
+            <goals>
+              <goal>prepare-agent-integration</goal>
+            </goals>
+          </execution>
+
           <execution>
             <id>report-integration</id>
             <phase>verify</phase>
             <goals>
               <goal>report-integration</goal>
             </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/site/jacoco-it</outputDirectory>
-              <formats>
-                <format>XML</format>
-              </formats>
-            </configuration>
           </execution>
 
           <!-- Coverage enforcement -->
