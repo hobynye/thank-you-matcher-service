@@ -26,7 +26,7 @@
     <skipUnitTests>false</skipUnitTests>
 
     <jacoco.version>0.8.14</jacoco.version>
-    <sonar.version>5.1.0.4751</sonar.version>
+    <sonar.version>5.5.0.6356</sonar.version>
 
     <!-- Sonar coverage aggregation -->
     <sonar.coverage.jacoco.xmlReportPaths>
