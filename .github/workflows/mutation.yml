@@ -1,0 +1,93 @@
+name: Mutation Tests
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+  schedule:
+    - cron: "0 2 * * *"
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  mutation-tests:
+    name: PIT Mutation Testing
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Run mutation tests
+        continue-on-error: true
+        run: mvn -B -ntp -Pmutation test pitest:mutationCoverage
+
+      - name: Generate mutation summary
+        id: pit-summary
+        if: github.event_name == 'pull_request'
+        run: |
+          REPORT=$(find target/pit-reports -name mutations.xml | head -n 1)
+
+          if [ -z "$REPORT" ]; then
+            echo "### 🧬 Mutation Testing (PIT)" > pit-comment.md
+            echo "" >> pit-comment.md
+            echo "⚠️ PIT report not found." >> pit-comment.md
+            echo "" >> pit-comment.md
+            echo "_Mutation tests may have failed or produced no results._" >> pit-comment.md
+          else
+            TOTAL=$(grep -o 'status=' "$REPORT" | wc -l)
+            KILLED=$(grep -o 'status=\"KILLED\"' "$REPORT" | wc -l)
+            SURVIVED=$(grep -o 'status=\"SURVIVED\"' "$REPORT" | wc -l)
+
+            if [ "$TOTAL" -eq 0 ]; then
+              SCORE=0
+            else
+              SCORE=$(( 100 * KILLED / TOTAL ))
+            fi
+
+            echo "### 🧬 Mutation Testing (PIT)" > pit-comment.md
+            echo "" >> pit-comment.md
+
+            echo "<details>" >> pit-comment.md
+            echo "<summary>Mutation testing details</summary>" >> pit-comment.md
+            echo "" >> pit-comment.md
+
+            echo "| Metric | Value |" >> pit-comment.md
+            echo "|------|------|" >> pit-comment.md
+            echo "| Total mutations | $TOTAL |" >> pit-comment.md
+            echo "| Killed | $KILLED |" >> pit-comment.md
+            echo "| Survived | $SURVIVED |" >> pit-comment.md
+            echo "| Mutation score | **$SCORE%** |" >> pit-comment.md
+
+            echo "" >> pit-comment.md
+            echo "</details>" >> pit-comment.md
+            echo "" >> pit-comment.md
+
+            echo "_Non-blocking. For visibility only._" >> pit-comment.md
+          fi
+
+          echo "comment<<EOF" >> $GITHUB_OUTPUT
+          cat pit-comment.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Post PR comment
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: pit-mutation-report
+          message: ${{ steps.pit-summary.outputs.comment }}
+
+      - name: Upload PIT report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pit-report
+          path: target/pit-reports

@@ -9,13 +9,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 
 @SpringBootTest
-class ApplicationTest {
+public class ApplicationIT {
     @Autowired
     ApplicationContext context;
 
     @Test
     void contextLoads() {
         assertThat(context, notNullValue());
-
     }
 }
