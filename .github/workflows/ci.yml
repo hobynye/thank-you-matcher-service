@@ -47,14 +47,14 @@ jobs:
 
       - name: Upload unit coverage
         if: matrix.test-type == 'unit'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: jacoco-unit
           path: target/site/jacoco
 
       - name: Upload integration coverage
         if: matrix.test-type == 'integration'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: jacoco-integration
           path: target/site/jacoco-it
@@ -78,13 +78,13 @@ jobs:
           cache: maven
 
       - name: Download unit coverage
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: jacoco-unit
           path: target/site/jacoco
 
       - name: Download integration coverage
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: jacoco-integration
           path: target/site/jacoco-it
