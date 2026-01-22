@@ -99,8 +99,8 @@ jobs:
           echo "Running Sonar PR analysis"
 
           mvn -B -ntp sonar:sonar \
-            -Dsonar.token=${SONAR_TOKEN} \
-            -Dsonar.host.url=${SONAR_HOST} \
-            -Dsonar.organization=${SONAR_ORG} \
-            -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+            -Dsonar.token=${{ env.SONAR_TOKEN }} \
+            -Dsonar.host.url=${{ env.SONAR_HOST }} \
+            -Dsonar.organization=${{ env.SONAR_ORG }} \
+            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} \
             -Dsonar.qualitygate.wait=true
