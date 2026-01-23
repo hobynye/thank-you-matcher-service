@@ -9,9 +9,6 @@ permissions:
   issues: write
   pull-requests: write
 
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 jobs:
   Release:
     runs-on: ubuntu-latest
@@ -34,8 +31,37 @@ jobs:
         with:
           node-version: lts/*
 
-      - name: 'Release'
+      - name: Build & test
+        run: mvn -B -ntp verify
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          mvn clean verify
-          npm install semantic-release -D
+          npm install --ignore-scripts --no-save semantic-release \
+            @semantic-release/git \
+            @semantic-release/exec \
+            @semantic-release/github \
+            @semantic-release/commit-analyzer \
+            @semantic-release/release-notes-generator
+            
           npx semantic-release
+
+      - name: Sonar scan (Release)
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST: ${{ vars.SONAR_HOST }}
+          SONAR_ORG: ${{ vars.SONAR_ORG }}
+          SONAR_PROJECT_KEY: ${{ vars.SONAR_PROJECT_KEY }}
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+
+          echo "Running Sonar for release version: $VERSION"
+
+          mvn -B -ntp sonar:sonar \
+            -Dsonar.token=${{ env.SONAR_TOKEN }} \
+            -Dsonar.host.url=${{ env.SONAR_HOST }} \
+            -Dsonar.organization=${{ env.SONAR_ORG }} \
+            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} \
+            -Dsonar.projectVersion=${VERSION} \
+            -Dsonar.qualitygate.wait=true
