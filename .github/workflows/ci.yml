@@ -63,6 +63,7 @@ jobs:
     name: Sonar Scan & Quality Gate
     runs-on: ubuntu-latest
     needs: tests
+    if: github.event_name == 'pull_request'
 
     steps:
       - name: Checkout
