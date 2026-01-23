@@ -38,7 +38,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm install --no-save semantic-release \
+          npm install --ignore-scripts --no-save semantic-release \
             @semantic-release/git \
             @semantic-release/exec \
             @semantic-release/github \
