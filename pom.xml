@@ -34,7 +34,7 @@
       target/site/jacoco-it/jacoco.xml
     </sonar.coverage.jacoco.xmlReportPaths>
 
-    <pit.version>1.15.8</pit.version>
+    <pit.version>1.22.0</pit.version>
     <pitest.target.classes>org.hobynye.*</pitest.target.classes>
     <pitest.target.tests>org.hobynye.*</pitest.target.tests>
   </properties>
