@@ -1,0 +1,41 @@
+services:
+  db:
+    image: postgres:16
+    container_name: tym-db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-tym}
+      POSTGRES_USER: ${POSTGRES_USER:-tym}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - tym_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tym-api
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB:-tym}
+      DB_USER:  ${POSTGRES_USER:-tym}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      # Optional: tune JVM in containers
+      # JAVA_OPTS: "-XX:MaxRAMPercentage=75 -XX:+UseZGC"
+    ports:
+      - "8080:8080"
+    # If you want logs to be easy to read during dev:
+    # restart: unless-stopped
+
+volumes:
+  tym_pgdata:
