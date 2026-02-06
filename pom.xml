@@ -15,15 +15,13 @@
 
   <groupId>org.hobynye</groupId>
   <artifactId>thank-you-matcher-service</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <name>Thank You Matcher Service</name>
 
   <properties>
     <java.version>21</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-    <skipUnitTests>false</skipUnitTests>
 
     <jacoco.version>0.8.14</jacoco.version>
     <sonar.version>5.5.0.6356</sonar.version>
@@ -37,19 +35,59 @@
     <pit.version>1.22.1</pit.version>
     <pitest.target.classes>org.hobynye.*</pitest.target.classes>
     <pitest.target.tests>org.hobynye.*</pitest.target.tests>
+
+    <!-- Optional: keep versions explicit if you ever need to pin -->
+    <!-- <postgresql.version>42.7.4</postgresql.version> -->
+    <!-- <flyway.version>10.20.1</flyway.version> -->
   </properties>
 
   <dependencies>
+    <!-- Web API -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
+    <!-- Iteration 0 additions -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+
+    <!-- Persistence baseline for later iterations -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <!-- <version>${postgresql.version}</version> -->
+    </dependency>
+
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-core</artifactId>
+      <!-- <version>${flyway.version}</version> -->
+    </dependency>
+
+    <!-- Tests -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <!-- Optional but handy for local dev (does not leak to prod) -->
+    <!--
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <scope>runtime</scope>
+      <optional>true</optional>
+    </dependency>
+    -->
   </dependencies>
 
   <build>
@@ -64,9 +102,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <skipTests>${skipUnitTests}</skipTests>
-        </configuration>
       </plugin>
 
       <!-- Integration tests -->
