@@ -4,11 +4,11 @@ WORKDIR /app
 
 # Leverage Docker layer caching
 COPY pom.xml .
-RUN mvn -q -DskipTests dependency:go-offline
+RUN mvn -q -DskipUnitTests dependency:go-offline
 
 # Copy sources and build
 COPY src ./src
-RUN mvn -q -DskipTests package
+RUN mvn -q -DskipUnitTests package
 
 # ---- runtime stage ----
 FROM eclipse-temurin:21-jre
