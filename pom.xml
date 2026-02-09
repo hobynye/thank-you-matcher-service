@@ -32,9 +32,13 @@
       target/site/jacoco-it/jacoco.xml
     </sonar.coverage.jacoco.xmlReportPaths>
 
+    <argLine/>
+
     <pit.version>1.22.1</pit.version>
     <pitest.target.classes>org.hobynye.*</pitest.target.classes>
     <pitest.target.tests>org.hobynye.*</pitest.target.tests>
+
+    <testcontainers.version>1.21.4</testcontainers.version>
 
     <!-- Optional: keep versions explicit if you ever need to pin -->
     <!-- <postgresql.version>42.7.4</postgresql.version> -->
@@ -42,19 +46,16 @@
   </properties>
 
   <dependencies>
-    <!-- Web API -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
-    <!-- Iteration 0 additions -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
 
-    <!-- Persistence baseline for later iterations -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -63,6 +64,7 @@
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
+      <scope>runtime</scope>
       <!-- <version>${postgresql.version}</version> -->
     </dependency>
 
@@ -79,15 +81,32 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- Optional but handy for local dev (does not leak to prod) -->
-    <!--
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${testcontainers.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${testcontainers.version}</version>
+      <scope>test</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
       <scope>runtime</scope>
       <optional>true</optional>
     </dependency>
-    -->
   </dependencies>
 
   <build>
@@ -98,16 +117,55 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
 
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-mockito-agent</id>
+            <phase>process-test-classes</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.mockito</groupId>
+                  <artifactId>mockito-core</artifactId>
+                  <outputDirectory>${project.build.directory}/mockito</outputDirectory>
+                  <destFileName>mockito-core.jar</destFileName>
+                </artifactItem>
+              </artifactItems>
+              <overWriteReleases>true</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
       <!-- Unit tests -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <argLine>@{argLine} -javaagent:${project.build.directory}/mockito/mockito-core.jar</argLine>
+          <systemPropertyVariables>
+            <spring.profiles.active>test</spring.profiles.active>
+          </systemPropertyVariables>
+        </configuration>
       </plugin>
 
       <!-- Integration tests -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+          <argLine>@{argLine} -javaagent:${project.build.directory}/mockito/mockito-core.jar</argLine>
+          <systemPropertyVariables>
+            <spring.profiles.active>it</spring.profiles.active>
+          </systemPropertyVariables>
+        </configuration>
         <executions>
           <execution>
             <goals>
