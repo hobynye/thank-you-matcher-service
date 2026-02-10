@@ -41,9 +41,7 @@ jobs:
 
       - name: Run integration tests
         if: matrix.test-type == 'integration'
-        env:
-          SPRING_PROFILES_ACTIVE: test
-        run: mvn -B -ntp verify -DskipTests=true jacoco:report-integration
+        run: mvn -B -ntp -DskipTests=true verify jacoco:report-integration
 
       - name: Upload unit coverage
         if: matrix.test-type == 'unit'
