@@ -41,7 +41,7 @@ jobs:
 
       - name: Run integration tests
         if: matrix.test-type == 'integration'
-        run: mvn -B -ntp -DskipTests=true verify jacoco:report-integration
+        run: mvn -B -ntp -DskipUTs=true verify
 
       - name: Upload unit coverage
         if: matrix.test-type == 'unit'
@@ -97,7 +97,7 @@ jobs:
         run: |
           echo "Running Sonar PR analysis"
           
-          mvn -B -ntp -DskipTests -DskipITs verify sonar:sonar \
+          mvn -B -ntp -DskipUTs=true -DskipITs=true verify sonar:sonar \
             -Dsonar.token=${{ env.SONAR_TOKEN }} \
             -Dsonar.host.url=${{ env.SONAR_HOST }} \
             -Dsonar.organization=${{ env.SONAR_ORG }} \
