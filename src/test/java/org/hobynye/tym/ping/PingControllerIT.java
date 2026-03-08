@@ -25,7 +25,7 @@ public class PingControllerIT {
                 .isOk()
                 .expectBody()
                 .jsonPath("$.ok").isEqualTo(true)
-                .jsonPath("$.timestamp").isNotEmpty();
+                .jsonPath("$.time").isNotEmpty();
     }
 
     @Test
