@@ -15,7 +15,7 @@
 
   <groupId>org.hobynye</groupId>
   <artifactId>thank-you-matcher-service</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <name>Thank You Matcher Service</name>
 
   <properties>
@@ -23,10 +23,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-    <skipUnitTests>false</skipUnitTests>
-
     <jacoco.version>0.8.14</jacoco.version>
     <sonar.version>5.5.0.6356</sonar.version>
+    <skipUTs>false</skipUTs>
+    <skipITs>false</skipITs>
 
     <!-- Sonar coverage aggregation -->
     <sonar.coverage.jacoco.xmlReportPaths>
@@ -34,9 +34,17 @@
       target/site/jacoco-it/jacoco.xml
     </sonar.coverage.jacoco.xmlReportPaths>
 
+    <argLine/>
+
     <pit.version>1.22.1</pit.version>
     <pitest.target.classes>org.hobynye.*</pitest.target.classes>
     <pitest.target.tests>org.hobynye.*</pitest.target.tests>
+
+    <testcontainers.version>1.21.4</testcontainers.version>
+
+    <!-- Optional: keep versions explicit if you ever need to pin -->
+    <!-- <postgresql.version>42.7.4</postgresql.version> -->
+    <!-- <flyway.version>10.20.1</flyway.version> -->
   </properties>
 
   <dependencies>
@@ -47,8 +55,59 @@
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <scope>runtime</scope>
+      <!-- <version>${postgresql.version}</version> -->
+    </dependency>
+
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-core</artifactId>
+      <!-- <version>${flyway.version}</version> -->
+    </dependency>
+
+    <!-- Tests -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${testcontainers.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${testcontainers.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <scope>runtime</scope>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 
@@ -60,12 +119,43 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
 
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-mockito-agent</id>
+            <phase>process-test-classes</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.mockito</groupId>
+                  <artifactId>mockito-core</artifactId>
+                  <outputDirectory>${project.build.directory}/mockito</outputDirectory>
+                  <destFileName>mockito-core.jar</destFileName>
+                </artifactItem>
+              </artifactItems>
+              <overWriteReleases>true</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
       <!-- Unit tests -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
-          <skipTests>${skipUnitTests}</skipTests>
+          <skipTests>${skipUTs}</skipTests>
+          <argLine>@{argLine} -javaagent:${project.build.directory}/mockito/mockito-core.jar</argLine>
+          <systemPropertyVariables>
+            <spring.profiles.active>test</spring.profiles.active>
+          </systemPropertyVariables>
         </configuration>
       </plugin>
 
@@ -73,6 +163,13 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+          <skipITs>${skipITs}</skipITs>
+          <argLine>@{argLine} -javaagent:${project.build.directory}/mockito/mockito-core.jar</argLine>
+          <systemPropertyVariables>
+            <spring.profiles.active>it</spring.profiles.active>
+          </systemPropertyVariables>
+        </configuration>
         <executions>
           <execution>
             <goals>
@@ -88,6 +185,11 @@
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>${jacoco.version}</version>
+        <configuration>
+          <excludes>
+            <exclude>org/hobynye/tym/Application*</exclude>
+          </excludes>
+        </configuration>
         <executions>
 
           <!-- Unit tests -->

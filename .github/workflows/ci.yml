@@ -33,7 +33,7 @@ jobs:
 
       # Compile once per job, no tests
       - name: Compile
-        run: mvn -B -ntp -DskipTests compile
+        run: mvn -B -ntp -DskipTests=true -DskipITs=true compile
 
       - name: Run unit tests
         if: matrix.test-type == 'unit'
@@ -41,9 +41,7 @@ jobs:
 
       - name: Run integration tests
         if: matrix.test-type == 'integration'
-        env:
-          SPRING_PROFILES_ACTIVE: test
-        run: mvn -B -ntp verify -DskipUnitTests=true jacoco:report-integration
+        run: mvn -B -ntp -DskipUTs=true verify
 
       - name: Upload unit coverage
         if: matrix.test-type == 'unit'
@@ -98,8 +96,8 @@ jobs:
           SONAR_PROJECT_KEY: ${{ vars.SONAR_PROJECT_KEY }}
         run: |
           echo "Running Sonar PR analysis"
-
-          mvn -B -ntp sonar:sonar \
+          
+          mvn -B -ntp -DskipUTs=true -DskipITs=true verify sonar:sonar \
             -Dsonar.token=${{ env.SONAR_TOKEN }} \
             -Dsonar.host.url=${{ env.SONAR_HOST }} \
             -Dsonar.organization=${{ env.SONAR_ORG }} \
