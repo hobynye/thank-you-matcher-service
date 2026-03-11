@@ -11,7 +11,7 @@ COPY src ./src
 RUN mvn -q -DskipTests package
 
 # ---- runtime stage ----
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:21.0.10_7-jre
 WORKDIR /app
 
 # Copy the built jar
