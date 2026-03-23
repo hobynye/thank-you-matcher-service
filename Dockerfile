@@ -1,5 +1,5 @@
 # ---- build stage ----
-FROM maven:3.9.9-eclipse-temurin-21 AS build
+FROM maven:3.9.14-eclipse-temurin-21 AS build
 WORKDIR /app
 
 # Leverage Docker layer caching
@@ -11,7 +11,7 @@ COPY src ./src
 RUN mvn -q -DskipTests package
 
 # ---- runtime stage ----
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:21.0.10_7-jre
 WORKDIR /app
 
 # Copy the built jar
