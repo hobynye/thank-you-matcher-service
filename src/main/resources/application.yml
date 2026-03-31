@@ -64,6 +64,8 @@ spring:
   flyway:
     enabled: false
 
+CLIENT_ID: test-client-id
+
 ---
 spring:
   config:
@@ -73,3 +75,5 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+
+CLIENT_ID: test-client-id
