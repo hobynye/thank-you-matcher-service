@@ -1,0 +1,147 @@
+name: Release
+
+on:
+  push:
+    branches: [main, beta, alpha]
+
+permissions:
+  contents: read
+
+jobs:
+  Release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+
+    outputs:
+      release_sha: ${{ steps.release_meta.outputs.release_sha }}
+      release_tag: ${{ steps.release_meta.outputs.release_tag }}
+      release_version: ${{ steps.release_meta.outputs.release_version }}
+
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 0
+
+      - name: 'Setup Java'
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: 'Setup Node'
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        with:
+          node-version: lts/*
+
+      - name: Build & test
+        run: mvn -B -ntp verify
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm install --ignore-scripts --no-save semantic-release \
+            @semantic-release/git \
+            @semantic-release/exec \
+            @semantic-release/github \
+            @semantic-release/commit-analyzer \
+            @semantic-release/release-notes-generator \
+            @semantic-release/changelog
+
+          npx semantic-release
+
+      - name: Capture release metadata (tag/version/SHA)
+        id: release_meta
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          RELEASE_SHA="$(git rev-parse HEAD)"
+          echo "release_sha=$RELEASE_SHA" >> "$GITHUB_OUTPUT"
+
+          # If a release happened, semantic-release tags the release commit.
+          # This gets tags pointing at HEAD (typically exactly one).
+          RELEASE_TAG="$(git tag --points-at HEAD | head -n 1 || true)"
+          echo "release_tag=$RELEASE_TAG" >> "$GITHUB_OUTPUT"
+
+          # Convert tag like "v1.2.3-beta.1" -> "1.2.3-beta.1"
+          RELEASE_VERSION="${RELEASE_TAG#v}"
+          echo "release_version=$RELEASE_VERSION" >> "$GITHUB_OUTPUT"
+
+          echo "Release SHA: $RELEASE_SHA"
+          echo "Release TAG: $RELEASE_TAG"
+          echo "Release VER: $RELEASE_VERSION"
+
+      - name: Sonar scan (Release)
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST: ${{ vars.SONAR_HOST }}
+          SONAR_ORG: ${{ vars.SONAR_ORG }}
+          SONAR_PROJECT_KEY: ${{ vars.SONAR_PROJECT_KEY }}
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+
+          echo "Running Sonar for release version: $VERSION"
+
+          mvn -B -ntp sonar:sonar \
+            -Dsonar.token=${{ env.SONAR_TOKEN }} \
+            -Dsonar.host.url=${{ env.SONAR_HOST }} \
+            -Dsonar.organization=${{ env.SONAR_ORG }} \
+            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} \
+            -Dsonar.projectVersion=${VERSION} \
+            -Dsonar.qualitygate.wait=true
+
+  Container:
+    runs-on: ubuntu-latest
+    needs: Release
+    if: ${{ needs.Release.outputs.release_tag != '' }}
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout release commit
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          ref: ${{ needs.Release.outputs.release_sha }}
+          fetch-depth: 0
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@ce360397dd3f832beb865e1373c09c0e9f86d70a # v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2 # v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/thank-you-matcher-service
+          tags: |
+            type=ref,event=branch
+            type=sha
+            # Only add a semantic-release version tag if a release tag exists
+            type=raw,value=${{ needs.Release.outputs.release_version }},enable=${{ needs.Release.outputs.release_tag != '' }}
+
+      - name: Build and push
+        uses: docker/build-push-action@d08e5c354a6adb9ed34480a06d141179aa583294 # v7
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

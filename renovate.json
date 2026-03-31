@@ -1,0 +1,78 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":prHourlyLimitNone",
+    ":prConcurrentLimit10",
+    "helpers:pinGitHubActionDigests"
+  ],
+
+  "timezone": "America/New_York",
+
+  "labels": [
+    "dependencies"
+  ],
+
+  "platformAutomerge": true,
+  "automergeStrategy": "squash",
+
+  "rebaseWhen": "behind-base-branch",
+
+  "dependencyDashboardTitle": "Renovate Dependency Dashboard",
+
+  "packageRules": [
+    {
+      "description": "Auto-merge patch and minor updates for Maven dependencies",
+      "matchManagers": ["maven"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true
+    },
+    {
+      "description": "Auto-merge patch and minor updates for GitHub Actions",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true
+    },
+    {
+      "description": "Do not auto-merge major updates",
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    },
+    {
+      "description": "Group Spring Boot dependencies",
+      "matchPackagePrefixes": ["org.springframework.boot", "org.springframework"],
+      "groupName": "spring-boot"
+    },
+    {
+      "description": "Group testing dependencies",
+      "matchPackagePatterns": [
+        "^org.junit",
+        "^org.mockito",
+        "^org.assertj",
+        "^org.testcontainers"
+      ],
+      "groupName": "testing-libraries"
+    }
+  ],
+
+  "maven": {
+    "enabled": true
+  },
+
+  "github-actions": {
+    "enabled": true
+  },
+
+  "ignorePaths": [
+    "**/target/**"
+  ],
+
+  "prCreation": "not-pending",
+
+  "requiredStatusChecks": [
+    "build"
+  ]
+}
