@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.notNullValue;
 @SpringBootTest
 @Testcontainers
 @ActiveProfiles("it")
-public class ApplicationIT {
+class ApplicationIT {
     @Container
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine")
             .withDatabaseName("tym_it")
