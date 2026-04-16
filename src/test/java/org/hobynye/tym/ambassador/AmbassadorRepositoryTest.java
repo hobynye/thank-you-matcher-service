@@ -33,7 +33,7 @@ class AmbassadorRepositoryTest {
     }
 
     @Test
-    void savesAndFindsById() {
+    void savesAndFindsAllFields() {
         Ambassador ambassador = new Ambassador();
         ambassador.setSeminar(seminar);
         ambassador.setFirstName("Jane");
@@ -49,7 +49,11 @@ class AmbassadorRepositoryTest {
         Ambassador found = ambassadorRepository.findById(saved.getId()).orElseThrow();
         assertThat(found.getFirstName(), is("Jane"));
         assertThat(found.getLastName(), is("Doe"));
+        assertThat(found.getSchoolName(), is("Cornwall Central High School"));
+        assertThat(found.getColor(), is("Red"));
+        assertThat(found.getGroupCode(), is("A"));
         assertThat(found.getCounty(), is("Orange"));
+        assertThat(found.getSeminar().getId(), is(seminar.getId()));
     }
 
     @Test

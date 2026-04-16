@@ -16,7 +16,7 @@ class SchoolRepositoryTest {
     SchoolRepository repository;
 
     @Test
-    void savesAndFindsById() {
+    void savesAndFindsAllFields() {
         School school = new School();
         school.setName("Cornwall Central High School");
         school.setCounty("Orange");
@@ -25,7 +25,10 @@ class SchoolRepositoryTest {
         School saved = repository.save(school);
 
         assertThat(saved.getId(), notNullValue());
-        assertThat(repository.findById(saved.getId()).orElse(null), notNullValue());
+        School found = repository.findById(saved.getId()).orElseThrow();
+        assertThat(found.getName(), is("Cornwall Central High School"));
+        assertThat(found.getCounty(), is("Orange"));
+        assertThat(found.getState(), is("NY"));
     }
 
     @Test

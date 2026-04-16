@@ -54,7 +54,7 @@ class MatchRepositoryTest {
     }
 
     @Test
-    void savesAndFindsMatch() {
+    void savesAndFindsAllFields() {
         Match match = new Match();
         match.setSeminar(seminar);
         match.setAmbassador(ambassador);
@@ -68,6 +68,7 @@ class MatchRepositoryTest {
         assertThat(found.isMandatory(), is(true));
         assertThat(found.getAmbassador().getId(), is(ambassador.getId()));
         assertThat(found.getSupporter().getId(), is(supporter.getId()));
+        assertThat(found.getSeminar().getId(), is(seminar.getId()));
     }
 
     @Test

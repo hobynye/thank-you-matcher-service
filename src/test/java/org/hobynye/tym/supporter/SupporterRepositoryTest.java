@@ -33,27 +33,105 @@ class SupporterRepositoryTest {
     }
 
     @Test
-    void savesDonorWithMatchingFields() {
+    void savesDonorWithAllFields() {
         Supporter donor = new Supporter();
         donor.setSeminar(seminar);
         donor.setSupporterType(SupporterType.DONOR);
-        donor.setLetterCount(1);
-        donor.setFullName("Acme Corp");
-        donor.setOrganization("Acme Corp");
-        donor.setBeneficiaryFirst("Jane");
-        donor.setBeneficiaryLast("Doe");
-        donor.setStreet("123 Main St");
-        donor.setCity("Albany");
+        donor.setLetterCount(2);
+        donor.setFullName("Kate Hartley");
+        donor.setFirstName("Kate");
+        donor.setLastName("Hartley");
+        donor.setOrganization(null);
+        donor.setDonationInfo("15 cash");
+        donor.setDonorType("Individual");
+        donor.setBeneficiaryFirst("Ronan");
+        donor.setBeneficiaryLast("Corr");
+        donor.setSponsoredSchool("SCH001");
+        donor.setSponsorCounty("Essex");
+        donor.setStreet("276 Main St");
+        donor.setCity("North Creek");
         donor.setState("NY");
-        donor.setZip("12201");
+        donor.setZip("12853");
 
         Supporter saved = supporterRepository.save(donor);
 
-        assertThat(saved.getId(), notNullValue());
         Supporter found = supporterRepository.findById(saved.getId()).orElseThrow();
         assertThat(found.getSupporterType(), is(SupporterType.DONOR));
-        assertThat(found.getBeneficiaryFirst(), is("Jane"));
-        assertThat(found.getOrganization(), is("Acme Corp"));
+        assertThat(found.getLetterCount(), is(2));
+        assertThat(found.getFullName(), is("Kate Hartley"));
+        assertThat(found.getFirstName(), is("Kate"));
+        assertThat(found.getLastName(), is("Hartley"));
+        assertThat(found.getDonationInfo(), is("15 cash"));
+        assertThat(found.getDonorType(), is("Individual"));
+        assertThat(found.getBeneficiaryFirst(), is("Ronan"));
+        assertThat(found.getBeneficiaryLast(), is("Corr"));
+        assertThat(found.getSponsoredSchool(), is("SCH001"));
+        assertThat(found.getSponsorCounty(), is("Essex"));
+        assertThat(found.getStreet(), is("276 Main St"));
+        assertThat(found.getCity(), is("North Creek"));
+        assertThat(found.getState(), is("NY"));
+        assertThat(found.getZip(), is("12853"));
+        assertThat(found.getSeminar().getId(), is(seminar.getId()));
+    }
+
+    @Test
+    void savesOrganizationDonorWithCountyMatch() {
+        Supporter donor = new Supporter();
+        donor.setSeminar(seminar);
+        donor.setSupporterType(SupporterType.DONOR);
+        donor.setFullName("Cornwall Lions");
+        donor.setOrganization("Cornwall Lions");
+        donor.setSponsorCounty("Orange");
+
+        Supporter saved = supporterRepository.save(donor);
+
+        Supporter found = supporterRepository.findById(saved.getId()).orElseThrow();
+        assertThat(found.getOrganization(), is("Cornwall Lions"));
+        assertThat(found.getSponsorCounty(), is("Orange"));
+    }
+
+    @Test
+    void savesSpeakerWithTitleAndRole() {
+        Supporter speaker = new Supporter();
+        speaker.setSeminar(seminar);
+        speaker.setSupporterType(SupporterType.SPEAKER);
+        speaker.setLetterCount(5);
+        speaker.setTitle("VP of Service Delivery");
+        speaker.setFirstName("Mike");
+        speaker.setLastName("Christakis");
+        speaker.setRole("Speaker");
+        speaker.setStreet("1400 Washington Ave");
+        speaker.setCity("Albany");
+        speaker.setState("NY");
+        speaker.setZip("12222");
+
+        Supporter saved = supporterRepository.save(speaker);
+
+        Supporter found = supporterRepository.findById(saved.getId()).orElseThrow();
+        assertThat(found.getTitle(), is("VP of Service Delivery"));
+        assertThat(found.getRole(), is("Speaker"));
+        assertThat(found.getLetterCount(), is(5));
+        assertThat(found.getStreet(), is("1400 Washington Ave"));
+        assertThat(found.getCity(), is("Albany"));
+        assertThat(found.getState(), is("NY"));
+        assertThat(found.getZip(), is("12222"));
+    }
+
+    @Test
+    void savesPanelistWithRole() {
+        Supporter panelist = new Supporter();
+        panelist.setSeminar(seminar);
+        panelist.setSupporterType(SupporterType.PANELIST);
+        panelist.setLetterCount(5);
+        panelist.setFirstName("Gabrielle");
+        panelist.setLastName("Fisher");
+        panelist.setRole("Panelist- Personal Leadership Panel");
+
+        Supporter saved = supporterRepository.save(panelist);
+
+        Supporter found = supporterRepository.findById(saved.getId()).orElseThrow();
+        assertThat(found.getSupporterType(), is(SupporterType.PANELIST));
+        assertThat(found.getRole(), is("Panelist- Personal Leadership Panel"));
     }
 
     @Test
@@ -71,6 +149,8 @@ class SupporterRepositoryTest {
         Supporter saved = supporterRepository.save(staff);
 
         Supporter found = supporterRepository.findById(saved.getId()).orElseThrow();
+        assertThat(found.getFirstName(), is("Brad"));
+        assertThat(found.getLastName(), is("Cech"));
         assertThat(found.getColor(), is("Red"));
         assertThat(found.getGroupCode(), is("A"));
         assertThat(found.getRole(), is("Facilitator"));

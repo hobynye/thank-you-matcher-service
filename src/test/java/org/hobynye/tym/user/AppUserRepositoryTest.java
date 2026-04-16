@@ -16,7 +16,7 @@ class AppUserRepositoryTest {
     AppUserRepository repository;
 
     @Test
-    void savesAndFindsById() {
+    void savesAndFindsAllFields() {
         AppUser user = new AppUser();
         user.setEmail("admin@hobynye.org");
         user.setAdmin(true);
@@ -24,7 +24,9 @@ class AppUserRepositoryTest {
         AppUser saved = repository.save(user);
 
         assertThat(saved.getId(), notNullValue());
-        assertThat(repository.findById(saved.getId()).orElse(null), notNullValue());
+        AppUser found = repository.findById(saved.getId()).orElseThrow();
+        assertThat(found.getEmail(), is("admin@hobynye.org"));
+        assertThat(found.isAdmin(), is(true));
     }
 
     @Test
