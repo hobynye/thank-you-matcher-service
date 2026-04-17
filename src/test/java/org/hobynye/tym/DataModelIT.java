@@ -30,10 +30,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-@SpringBootTest(properties = {
-        "spring.jpa.hibernate.ddl-auto=create-drop",
-        "spring.flyway.enabled=false"
-})
+@SpringBootTest
 @Testcontainers
 @ActiveProfiles("it")
 @Transactional

@@ -22,6 +22,9 @@ public class Ambassador {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    // Intentional denormalization: stored as a plain string to simplify bulk upload.
+    // Ambassadors are always queried by seminar, never by school, so an FK to the
+    // school table would add a lookup-or-insert per row at import time with no benefit.
     @Column(name = "school_name")
     private String schoolName;
 

@@ -24,21 +24,26 @@ public class Supporter {
     private int letterCount = 1;
 
     // Address fields — applicable to all supporter types
+    @Column(length = 500)
     private String street;
+    @Column(length = 255)
     private String city;
+    @Column(length = 100)
     private String state;
+    @Column(length = 20)
     private String zip;
 
     // Donor fields
-    @Column(name = "full_name")
+    @Column(name = "full_name", length = 500)
     private String fullName;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", length = 255)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", length = 255)
     private String lastName;
 
+    @Column(length = 500)
     private String organization;
 
     @Column(name = "donation_info")
@@ -61,13 +66,16 @@ public class Supporter {
     private String sponsorCounty;
 
     // Speaker / Panelist / Staff fields
+    @Column(length = 255)
     private String title;
+    @Column(length = 255)
     private String role;
 
     // Staff matching fields
+    @Column(length = 100)
     private String color;
 
-    @Column(name = "group_code")
+    @Column(name = "group_code", length = 50)
     private String groupCode;
 
     public UUID getId() { return id; }
