@@ -168,7 +168,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <skipTests>${skipUTs}</skipTests>
-          <argLine>${argLine} -javaagent:${project.build.directory}/mockito/mockito-core.jar</argLine>
+          <argLine>@{argLine} -javaagent:${project.build.directory}/mockito/mockito-core.jar</argLine>
           <systemPropertyVariables>
             <spring.profiles.active>test</spring.profiles.active>
           </systemPropertyVariables>
@@ -181,7 +181,7 @@
         <artifactId>maven-failsafe-plugin</artifactId>
         <configuration>
           <skipITs>${skipITs}</skipITs>
-          <argLine>${argLine} -javaagent:${project.build.directory}/mockito/mockito-core.jar</argLine>
+          <argLine>@{argLine} -javaagent:${project.build.directory}/mockito/mockito-core.jar</argLine>
           <systemPropertyVariables>
             <spring.profiles.active>it</spring.profiles.active>
           </systemPropertyVariables>
@@ -302,10 +302,9 @@
             <avoidCallsTo>org.slf4j</avoidCallsTo>
           </avoidCallsTo>
 
-          <!-- Minion JVM -->
-          <jvmArgs>
-            <value>-Dspring.profiles.active=test</value>
-          </jvmArgs>
+          <!-- Minion JVM: explicit argLine so PIT never inherits @{argLine} from Surefire.
+               PIT does its own coverage analysis; JaCoCo agent is not needed here. -->
+          <argLine>-Dspring.profiles.active=test -javaagent:${project.build.directory}/mockito/mockito-core.jar</argLine>
 
           <!-- Performance & stability -->
           <threads>4</threads>
