@@ -302,6 +302,11 @@
             <avoidCallsTo>org.slf4j</avoidCallsTo>
           </avoidCallsTo>
 
+          <!-- Minion JVM -->
+          <jvmArgs>
+            <value>-Dspring.profiles.active=test</value>
+          </jvmArgs>
+
           <!-- Performance & stability -->
           <threads>4</threads>
           <timeoutFactor>1.5</timeoutFactor>
