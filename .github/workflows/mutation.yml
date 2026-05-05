@@ -83,6 +83,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@70d2764d1a7d5d9560b100cbea0077fc8f633987 # v3
         with:
           header: pit-mutation-report
+          recreate: true
           message: ${{ steps.pit-summary.outputs.comment }}
 
       - name: Upload PIT report
