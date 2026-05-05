@@ -37,8 +37,9 @@
     <argLine/>
 
     <pit.version>1.23.0</pit.version>
+    <pit.junit5.plugin.version>1.2.2</pit.junit5.plugin.version>
     <pitest.target.classes>org.hobynye.*</pitest.target.classes>
-    <pitest.target.tests>org.hobynye.*</pitest.target.tests>
+    <pitest.target.tests>org.hobynye.*Test</pitest.target.tests>
 
     <testcontainers.version>1.21.4</testcontainers.version>
   </properties>
@@ -123,6 +124,12 @@
       <groupId>org.testcontainers</groupId>
       <artifactId>postgresql</artifactId>
       <version>${testcontainers.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-launcher</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -278,6 +285,13 @@
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
         <version>${pit.version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-junit5-plugin</artifactId>
+            <version>${pit.junit5.plugin.version}</version>
+          </dependency>
+        </dependencies>
         <configuration>
 
           <!-- What to mutate -->
@@ -294,6 +308,10 @@
           <avoidCallsTo>
             <avoidCallsTo>org.slf4j</avoidCallsTo>
           </avoidCallsTo>
+
+          <!-- Minion JVM: explicit argLine so PIT never inherits @{argLine} from Surefire.
+               PIT does its own coverage analysis; JaCoCo agent is not needed here. -->
+          <argLine>-Dspring.profiles.active=test -javaagent:${project.build.directory}/mockito/mockito-core.jar</argLine>
 
           <!-- Performance & stability -->
           <threads>4</threads>
