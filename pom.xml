@@ -9,7 +9,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>4.0.4</version>
+    <version>4.0.6</version>
     <relativePath/>
   </parent>
 
@@ -24,8 +24,10 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <poi.version>5.3.0</poi.version>
+
     <jacoco.version>0.8.14</jacoco.version>
-    <sonar.version>5.5.0.6356</sonar.version>
+
+    <sonar.version>5.6.0.6792</sonar.version>
     <skipUTs>false</skipUTs>
     <skipITs>false</skipITs>
 
@@ -37,7 +39,7 @@
 
     <argLine/>
 
-    <pit.version>1.23.0</pit.version>
+    <pit.version>1.23.1</pit.version>
     <pit.junit5.plugin.version>1.2.2</pit.junit5.plugin.version>
     <pitest.target.classes>org.hobynye.*</pitest.target.classes>
     <pitest.target.tests>org.hobynye.*Test</pitest.target.tests>
