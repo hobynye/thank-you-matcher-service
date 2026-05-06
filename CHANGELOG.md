@@ -1,3 +1,10 @@
+# [1.1.0-beta.5](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.0-beta.4...v1.1.0-beta.5) (2026-05-06)
+
+
+### Features
+
+* add spreadsheet upload endpoints ([#72](https://github.com/hobynye/thank-you-matcher-service/issues/72)) ([80b4791](https://github.com/hobynye/thank-you-matcher-service/commit/80b47914baeaa96a4488a0250fb08469fb2ed210))
+
 # [1.1.0-beta.4](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.0-beta.3...v1.1.0-beta.4) (2026-05-06)
 
 
