@@ -1,3 +1,10 @@
+# [1.1.0-beta.7](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.0-beta.6...v1.1.0-beta.7) (2026-05-06)
+
+
+### Bug Fixes
+
+* **ci:** lock npm dependencies and avoid npx in release workflow ([#74](https://github.com/hobynye/thank-you-matcher-service/issues/74)) ([5c2db25](https://github.com/hobynye/thank-you-matcher-service/commit/5c2db257951c5e26f9da15ccbdad03a867a2b77f))
+
 # [1.1.0-beta.6](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.0-beta.5...v1.1.0-beta.6) (2026-05-06)
 
 
