@@ -1,3 +1,17 @@
+# [1.1.0-beta.3](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.0-beta.2...v1.1.0-beta.3) (2026-05-05)
+
+
+### Bug Fixes
+
+* **ci:** use RELEASE_TOKEN for semantic-release to bypass main branch rules ([#70](https://github.com/hobynye/thank-you-matcher-service/issues/70)) ([08bec0f](https://github.com/hobynye/thank-you-matcher-service/commit/08bec0f57db09d85b0cdaa10ef6c7684a104e567))
+
+# [1.1.0-beta.2](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.0-beta.1...v1.1.0-beta.2) (2026-05-05)
+
+
+### Features
+
+* add domain model — entities, repositories, and Flyway migration ([#62](https://github.com/hobynye/thank-you-matcher-service/issues/62)) ([511f568](https://github.com/hobynye/thank-you-matcher-service/commit/511f568b626285b7e72e4aedcb42df4414bb7564))
+
 # [1.1.0-beta.1](https://github.com/hobynye/thank-you-matcher-service/compare/v1.0.1...v1.1.0-beta.1) (2026-03-31)
 
 
