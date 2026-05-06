@@ -15,10 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -188,8 +190,10 @@ class SupporterUploadServiceTest {
 
     @Test
     void throws404ForUnknownSeminar() {
+        UUID unknownId = UUID.randomUUID();
+        InputStream empty = new ByteArrayInputStream(new byte[0]);
         assertThrows(ResponseStatusException.class,
-                () -> service.upload(java.util.UUID.randomUUID(), new ByteArrayInputStream(new byte[0])));
+                () -> service.upload(unknownId, empty));
     }
 
     private byte[] buildSheet(SheetBuilder builder) throws IOException {
