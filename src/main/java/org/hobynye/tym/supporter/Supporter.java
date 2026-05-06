@@ -23,55 +23,61 @@ public class Supporter {
     @Column(name = "letter_count", nullable = false)
     private int letterCount = 1;
 
-    // Address fields — applicable to all supporter types
+    // Address fields
     @Column(length = 500)
     private String street;
+
+    @Column(length = 500)
+    private String street2;
+
     @Column(length = 255)
     private String city;
+
     @Column(length = 100)
     private String state;
+
     @Column(length = 20)
     private String zip;
 
-    // Donor fields
-    @Column(name = "full_name", length = 500)
-    private String fullName;
-
-    @Column(name = "first_name", length = 255)
-    private String firstName;
-
-    @Column(name = "last_name", length = 255)
-    private String lastName;
-
+    // Donor identity fields
     @Column(length = 500)
-    private String organization;
+    private String name;
 
-    @Column(name = "donation_info")
-    private String donationInfo;
+    @Column(name = "contact_name", length = 500)
+    private String contactName;
 
-    @Column(name = "donor_type")
-    private String donorType;
+    @Column(length = 255)
+    private String category;
 
-    // Donor matching fields
-    @Column(name = "beneficiary_first")
-    private String beneficiaryFirst;
+    @Column(length = 255)
+    private String club;
 
-    @Column(name = "beneficiary_last")
-    private String beneficiaryLast;
+    @Column(length = 255)
+    private String email;
 
+    @Column(length = 50)
+    private String phone;
+
+    // Donor matching fields — drive phase 1 mandatory match logic
     @Column(name = "sponsored_school")
     private String sponsoredSchool;
 
-    @Column(name = "sponsor_county")
-    private String sponsorCounty;
+    @Column(name = "sponsored_county")
+    private String sponsoredCounty;
+
+    @Column(name = "sponsored_j_staff")
+    private String sponsoredJStaff;
+
+    @Column(name = "sponsored_ambassador")
+    private String sponsoredAmbassador;
 
     // Speaker / Panelist / Staff fields
     @Column(length = 255)
     private String title;
+
     @Column(length = 255)
     private String role;
 
-    // Staff matching fields
     @Column(length = 100)
     private String color;
 
@@ -92,6 +98,9 @@ public class Supporter {
     public String getStreet() { return street; }
     public void setStreet(String street) { this.street = street; }
 
+    public String getStreet2() { return street2; }
+    public void setStreet2(String street2) { this.street2 = street2; }
+
     public String getCity() { return city; }
     public void setCity(String city) { this.city = city; }
 
@@ -101,35 +110,35 @@ public class Supporter {
     public String getZip() { return zip; }
     public void setZip(String zip) { this.zip = zip; }
 
-    public String getFullName() { return fullName; }
-    public void setFullName(String fullName) { this.fullName = fullName; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public String getFirstName() { return firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public String getContactName() { return contactName; }
+    public void setContactName(String contactName) { this.contactName = contactName; }
 
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
 
-    public String getOrganization() { return organization; }
-    public void setOrganization(String organization) { this.organization = organization; }
+    public String getClub() { return club; }
+    public void setClub(String club) { this.club = club; }
 
-    public String getDonationInfo() { return donationInfo; }
-    public void setDonationInfo(String donationInfo) { this.donationInfo = donationInfo; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public String getDonorType() { return donorType; }
-    public void setDonorType(String donorType) { this.donorType = donorType; }
-
-    public String getBeneficiaryFirst() { return beneficiaryFirst; }
-    public void setBeneficiaryFirst(String beneficiaryFirst) { this.beneficiaryFirst = beneficiaryFirst; }
-
-    public String getBeneficiaryLast() { return beneficiaryLast; }
-    public void setBeneficiaryLast(String beneficiaryLast) { this.beneficiaryLast = beneficiaryLast; }
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
 
     public String getSponsoredSchool() { return sponsoredSchool; }
     public void setSponsoredSchool(String sponsoredSchool) { this.sponsoredSchool = sponsoredSchool; }
 
-    public String getSponsorCounty() { return sponsorCounty; }
-    public void setSponsorCounty(String sponsorCounty) { this.sponsorCounty = sponsorCounty; }
+    public String getSponsoredCounty() { return sponsoredCounty; }
+    public void setSponsoredCounty(String sponsoredCounty) { this.sponsoredCounty = sponsoredCounty; }
+
+    public String getSponsoredJStaff() { return sponsoredJStaff; }
+    public void setSponsoredJStaff(String sponsoredJStaff) { this.sponsoredJStaff = sponsoredJStaff; }
+
+    public String getSponsoredAmbassador() { return sponsoredAmbassador; }
+    public void setSponsoredAmbassador(String sponsoredAmbassador) { this.sponsoredAmbassador = sponsoredAmbassador; }
 
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }

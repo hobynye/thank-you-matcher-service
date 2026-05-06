@@ -146,15 +146,10 @@ class DataModelIT {
         donor.setSeminar(seminar);
         donor.setSupporterType(SupporterType.DONOR);
         donor.setLetterCount(1);
-        donor.setFullName("Kate Hartley");
-        donor.setFirstName("Kate");
-        donor.setLastName("Hartley");
-        donor.setDonationInfo("15 cash");
-        donor.setDonorType("Individual");
-        donor.setBeneficiaryFirst("Ronan");
-        donor.setBeneficiaryLast("Corr");
-        donor.setSponsoredSchool("SCH001");
-        donor.setSponsorCounty("Essex");
+        donor.setName("Kate Hartley");
+        donor.setCategory("Individual");
+        donor.setSponsoredSchool("Greenwich Central School");
+        donor.setSponsoredCounty("Essex");
         donor.setStreet("276 Main St");
         donor.setCity("North Creek");
         donor.setState("NY");
@@ -166,8 +161,7 @@ class DataModelIT {
         speaker.setSupporterType(SupporterType.SPEAKER);
         speaker.setLetterCount(5);
         speaker.setTitle("Dr.");
-        speaker.setFirstName("Mike");
-        speaker.setLastName("Christakis");
+        speaker.setName("Mike Christakis");
         speaker.setRole("Speaker");
         supporterRepository.save(speaker);
 
@@ -175,8 +169,7 @@ class DataModelIT {
         panelist.setSeminar(seminar);
         panelist.setSupporterType(SupporterType.PANELIST);
         panelist.setLetterCount(5);
-        panelist.setFirstName("Gabrielle");
-        panelist.setLastName("Fisher");
+        panelist.setName("Gabrielle Fisher");
         panelist.setRole("Panelist- Personal Leadership Panel");
         supporterRepository.save(panelist);
 
@@ -184,8 +177,7 @@ class DataModelIT {
         staff.setSeminar(seminar);
         staff.setSupporterType(SupporterType.STAFF);
         staff.setLetterCount(2);
-        staff.setFirstName("Brad");
-        staff.setLastName("Cech");
+        staff.setName("Brad Cech");
         staff.setRole("Facilitator");
         staff.setColor("Red");
         staff.setGroupCode("A");
@@ -197,14 +189,10 @@ class DataModelIT {
         List<Supporter> donors = supporterRepository.findBySeminarIdAndSupporterType(seminar.getId(), SupporterType.DONOR);
         assertThat(donors, hasSize(1));
         Supporter foundDonor = donors.get(0);
-        assertThat(foundDonor.getFullName(), is("Kate Hartley"));
-        assertThat(foundDonor.getBeneficiaryFirst(), is("Ronan"));
-        assertThat(foundDonor.getBeneficiaryLast(), is("Corr"));
-        assertThat(foundDonor.getSponsoredSchool(), is("SCH001"));
-        assertThat(foundDonor.getSponsorCounty(), is("Essex"));
-        assertThat(foundDonor.getOrganization(), nullValue());
-        assertThat(foundDonor.getDonationInfo(), is("15 cash"));
-        assertThat(foundDonor.getDonorType(), is("Individual"));
+        assertThat(foundDonor.getName(), is("Kate Hartley"));
+        assertThat(foundDonor.getCategory(), is("Individual"));
+        assertThat(foundDonor.getSponsoredSchool(), is("Greenwich Central School"));
+        assertThat(foundDonor.getSponsoredCounty(), is("Essex"));
         assertThat(foundDonor.getStreet(), is("276 Main St"));
         assertThat(foundDonor.getCity(), is("North Creek"));
         assertThat(foundDonor.getState(), is("NY"));
@@ -234,7 +222,7 @@ class DataModelIT {
         Supporter supporter = new Supporter();
         supporter.setSeminar(seminar);
         supporter.setSupporterType(SupporterType.DONOR);
-        supporter.setFullName("Acme Corp");
+        supporter.setName("Acme Corp");
         supporter = supporterRepository.save(supporter);
 
         Match match = new Match();
