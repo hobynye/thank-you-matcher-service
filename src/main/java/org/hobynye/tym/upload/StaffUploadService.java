@@ -59,6 +59,7 @@ public class StaffUploadService {
                 s.setState(row.getString("state"));
                 s.setZip(row.getString("zip"));
                 s.setLetterCount(row.getIntOrDefault("letter count", 1));
+                // DonorInfo.xlsx has no Title column; Supporter.title is intentionally left null for staff-sheet uploads
 
                 supporters.add(s);
             }

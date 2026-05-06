@@ -15,7 +15,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class AmbassadorUploadService {
@@ -40,6 +42,12 @@ public class AmbassadorUploadService {
         try (XlsxSheet sheet = XlsxSheet.from(in)) {
             ambassadorRepository.deleteBySeminarId(seminarId);
 
+            Map<String, String> countyBySchool = schoolRepository.findAll().stream()
+                    .collect(Collectors.toMap(
+                            s -> s.getName().toLowerCase(),
+                            School::getCounty,
+                            (a, b) -> a));
+
             List<Ambassador> ambassadors = new ArrayList<>();
             for (XlsxSheet.RowView row : sheet.rows()) {
                 String firstName = row.getString("first name");
@@ -47,7 +55,7 @@ public class AmbassadorUploadService {
                 if (firstName == null && lastName == null) continue;
 
                 String schoolName = row.getString("school name");
-                String county = resolveCounty(schoolName);
+                String county = schoolName != null ? countyBySchool.get(schoolName.toLowerCase()) : null;
 
                 Ambassador a = new Ambassador();
                 a.setSeminar(seminar);
@@ -67,10 +75,4 @@ public class AmbassadorUploadService {
         }
     }
 
-    private String resolveCounty(String schoolName) {
-        if (schoolName == null) return null;
-        return schoolRepository.findByNameIgnoreCase(schoolName)
-                .map(School::getCounty)
-                .orElse(null);
-    }
 }

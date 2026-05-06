@@ -26,6 +26,9 @@ class XlsxSheet implements Closeable {
         Workbook wb = WorkbookFactory.create(in);
         Sheet sheet = wb.getSheetAt(0);
         Row headerRow = sheet.getRow(0);
+        if (headerRow == null) {
+            return new XlsxSheet(wb, new LinkedHashMap<>(), List.of());
+        }
         Map<String, Integer> idx = new LinkedHashMap<>();
         for (Cell cell : headerRow) {
             String header = cell.getStringCellValue().trim().toLowerCase();

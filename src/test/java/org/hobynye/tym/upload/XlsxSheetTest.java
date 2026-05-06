@@ -103,6 +103,15 @@ class XlsxSheetTest {
         }
     }
 
+    @Test
+    void emptyWorkbookReturnsNoRows() throws IOException {
+        byte[] xlsx = workbook(wb -> wb.createSheet());
+
+        try (XlsxSheet sheet = XlsxSheet.from(new ByteArrayInputStream(xlsx))) {
+            assertThat(sheet.rows(), empty());
+        }
+    }
+
     private byte[] workbook(WorkbookBuilder builder) throws IOException {
         try (XSSFWorkbook wb = new XSSFWorkbook()) {
             builder.build(wb);
