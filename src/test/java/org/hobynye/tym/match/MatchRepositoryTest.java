@@ -49,7 +49,7 @@ class MatchRepositoryTest {
         supporter = new Supporter();
         supporter.setSeminar(seminar);
         supporter.setSupporterType(SupporterType.DONOR);
-        supporter.setFullName("Acme Corp");
+        supporter.setName("Acme Corp");
         supporter = supporterRepository.save(supporter);
     }
 
