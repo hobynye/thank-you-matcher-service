@@ -1,3 +1,10 @@
+# [1.1.0-beta.4](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.0-beta.3...v1.1.0-beta.4) (2026-05-06)
+
+
+### Features
+
+* align supporter schema with 2026 income spreadsheet format ([#71](https://github.com/hobynye/thank-you-matcher-service/issues/71)) ([5ffadb2](https://github.com/hobynye/thank-you-matcher-service/commit/5ffadb25b38ffed2e0891c6c5cd2be739ee492e5))
+
 # [1.1.0-beta.3](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.0-beta.2...v1.1.0-beta.3) (2026-05-05)
 
 
