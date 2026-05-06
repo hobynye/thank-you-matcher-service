@@ -45,16 +45,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm install --ignore-scripts --no-save semantic-release \
-            @semantic-release/git \
-            @semantic-release/exec \
-            @semantic-release/github \
-            @semantic-release/commit-analyzer \
-            @semantic-release/release-notes-generator \
-            @semantic-release/changelog \
-            conventional-changelog-conventionalcommits
-
-          npx semantic-release
+          npm ci --ignore-scripts
+          ./node_modules/.bin/semantic-release
 
       - name: Capture release metadata (tag/version/SHA)
         id: release_meta
