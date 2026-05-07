@@ -43,18 +43,21 @@
     },
     {
       "description": "Group Spring Boot dependencies",
-      "matchPackagePrefixes": ["org.springframework.boot", "org.springframework"],
-      "groupName": "spring-boot"
+      "groupName": "spring-boot",
+      "matchPackageNames": [
+        "org.springframework.boot{/,}**",
+        "org.springframework{/,}**"
+      ]
     },
     {
       "description": "Group testing dependencies",
-      "matchPackagePatterns": [
-        "^org.junit",
-        "^org.mockito",
-        "^org.assertj",
-        "^org.testcontainers"
-      ],
-      "groupName": "testing-libraries"
+      "groupName": "testing-libraries",
+      "matchPackageNames": [
+        "/^org.junit/",
+        "/^org.mockito/",
+        "/^org.assertj/",
+        "/^org.testcontainers/"
+      ]
     }
   ],
 
@@ -70,9 +73,6 @@
     "**/target/**"
   ],
 
-  "prCreation": "not-pending",
+  "prCreation": "not-pending"
 
-  "requiredStatusChecks": [
-    "build"
-  ]
 }
