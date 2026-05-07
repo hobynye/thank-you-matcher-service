@@ -1,3 +1,19 @@
+# [1.1.0](https://github.com/hobynye/thank-you-matcher-service/compare/v1.0.1...v1.1.0) (2026-05-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.springframework.boot:spring-boot-starter-parent to v4.0.2 ([#27](https://github.com/hobynye/thank-you-matcher-service/issues/27)) ([f600d8a](https://github.com/hobynye/thank-you-matcher-service/commit/f600d8a58890bafb1ce7eee2469b208ba4366090))
+* **deps:** update dependency org.springframework.boot:spring-boot-starter-parent to v4.0.3 ([#33](https://github.com/hobynye/thank-you-matcher-service/issues/33)) ([10bbdb1](https://github.com/hobynye/thank-you-matcher-service/commit/10bbdb1de3ee19ff1bb726404542f76b5921d443))
+* **deps:** update dependency org.springframework.boot:spring-boot-starter-parent to v4.0.4 ([#51](https://github.com/hobynye/thank-you-matcher-service/issues/51)) ([402bae2](https://github.com/hobynye/thank-you-matcher-service/commit/402bae26597568ddaa4fb3d3030f9429934af277))
+* **deps:** update dependency org.springframework.boot:spring-boot-starter-parent to v4.0.5 ([#52](https://github.com/hobynye/thank-you-matcher-service/issues/52)) ([2e90356](https://github.com/hobynye/thank-you-matcher-service/commit/2e90356efd80234e979f79e73419574a49c3c8f5))
+* **deps:** update dependency org.springframework.boot:spring-boot-starter-parent to v4.0.6 ([#69](https://github.com/hobynye/thank-you-matcher-service/issues/69)) ([feb7b1f](https://github.com/hobynye/thank-you-matcher-service/commit/feb7b1fd313e51768600ee53779166171de2579e))
+
+
+### Features
+
+* container creation ([#31](https://github.com/hobynye/thank-you-matcher-service/issues/31)) ([115b6f7](https://github.com/hobynye/thank-you-matcher-service/commit/115b6f7acf63c2e7d87f89ee683053e322ebd814))
+
 # [1.1.0-beta.7](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.0-beta.6...v1.1.0-beta.7) (2026-05-06)
 
 
