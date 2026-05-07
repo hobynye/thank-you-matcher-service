@@ -40,7 +40,7 @@
     <argLine/>
 
     <pit.version>1.23.1</pit.version>
-    <pit.junit5.plugin.version>1.2.2</pit.junit5.plugin.version>
+    <pit.junit5.plugin.version>1.2.3</pit.junit5.plugin.version>
     <pitest.target.classes>org.hobynye.*</pitest.target.classes>
     <pitest.target.tests>org.hobynye.*Test</pitest.target.tests>
 
