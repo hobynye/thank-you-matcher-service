@@ -43,9 +43,9 @@ jobs:
             echo "" >> pit-comment.md
             echo "_Mutation tests may have failed or produced no results._" >> pit-comment.md
           else
-            TOTAL=$(grep -o 'status=' "$REPORT" | wc -l)
-            KILLED=$(grep -o 'status=\"KILLED\"' "$REPORT" | wc -l)
-            SURVIVED=$(grep -o 'status=\"SURVIVED\"' "$REPORT" | wc -l)
+            TOTAL=$(grep -o "status='" "$REPORT" | wc -l)
+            KILLED=$(grep -o "status='KILLED'" "$REPORT" | wc -l)
+            SURVIVED=$(grep -o "status='SURVIVED'" "$REPORT" | wc -l)
 
             if [ "$TOTAL" -eq 0 ]; then
               SCORE=0
@@ -83,6 +83,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@70d2764d1a7d5d9560b100cbea0077fc8f633987 # v3
         with:
           header: pit-mutation-report
+          recreate: true
           message: ${{ steps.pit-summary.outputs.comment }}
 
       - name: Upload PIT report

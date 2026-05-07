@@ -25,6 +25,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
+          token: ${{ secrets.RELEASE_TOKEN }}
 
       - name: 'Setup Java'
         uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5
@@ -43,18 +44,10 @@ jobs:
 
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         run: |
-          npm install --ignore-scripts --no-save semantic-release \
-            @semantic-release/git \
-            @semantic-release/exec \
-            @semantic-release/github \
-            @semantic-release/commit-analyzer \
-            @semantic-release/release-notes-generator \
-            @semantic-release/changelog \
-            conventional-changelog-conventionalcommits
-
-          npx semantic-release
+          npm ci --ignore-scripts
+          ./node_modules/.bin/semantic-release
 
       - name: Capture release metadata (tag/version/SHA)
         id: release_meta
