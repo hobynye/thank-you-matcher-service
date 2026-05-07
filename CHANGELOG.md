@@ -1,3 +1,62 @@
+# [1.1.0](https://github.com/hobynye/thank-you-matcher-service/compare/v1.0.1...v1.1.0) (2026-05-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.springframework.boot:spring-boot-starter-parent to v4.0.2 ([#27](https://github.com/hobynye/thank-you-matcher-service/issues/27)) ([f600d8a](https://github.com/hobynye/thank-you-matcher-service/commit/f600d8a58890bafb1ce7eee2469b208ba4366090))
+* **deps:** update dependency org.springframework.boot:spring-boot-starter-parent to v4.0.3 ([#33](https://github.com/hobynye/thank-you-matcher-service/issues/33)) ([10bbdb1](https://github.com/hobynye/thank-you-matcher-service/commit/10bbdb1de3ee19ff1bb726404542f76b5921d443))
+* **deps:** update dependency org.springframework.boot:spring-boot-starter-parent to v4.0.4 ([#51](https://github.com/hobynye/thank-you-matcher-service/issues/51)) ([402bae2](https://github.com/hobynye/thank-you-matcher-service/commit/402bae26597568ddaa4fb3d3030f9429934af277))
+* **deps:** update dependency org.springframework.boot:spring-boot-starter-parent to v4.0.5 ([#52](https://github.com/hobynye/thank-you-matcher-service/issues/52)) ([2e90356](https://github.com/hobynye/thank-you-matcher-service/commit/2e90356efd80234e979f79e73419574a49c3c8f5))
+* **deps:** update dependency org.springframework.boot:spring-boot-starter-parent to v4.0.6 ([#69](https://github.com/hobynye/thank-you-matcher-service/issues/69)) ([feb7b1f](https://github.com/hobynye/thank-you-matcher-service/commit/feb7b1fd313e51768600ee53779166171de2579e))
+
+
+### Features
+
+* container creation ([#31](https://github.com/hobynye/thank-you-matcher-service/issues/31)) ([115b6f7](https://github.com/hobynye/thank-you-matcher-service/commit/115b6f7acf63c2e7d87f89ee683053e322ebd814))
+
+# [1.1.0-beta.7](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.0-beta.6...v1.1.0-beta.7) (2026-05-06)
+
+
+### Bug Fixes
+
+* **ci:** lock npm dependencies and avoid npx in release workflow ([#74](https://github.com/hobynye/thank-you-matcher-service/issues/74)) ([5c2db25](https://github.com/hobynye/thank-you-matcher-service/commit/5c2db257951c5e26f9da15ccbdad03a867a2b77f))
+
+# [1.1.0-beta.6](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.0-beta.5...v1.1.0-beta.6) (2026-05-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.springframework.boot:spring-boot-starter-parent to v4.0.5 ([#52](https://github.com/hobynye/thank-you-matcher-service/issues/52)) ([2e90356](https://github.com/hobynye/thank-you-matcher-service/commit/2e90356efd80234e979f79e73419574a49c3c8f5))
+* **deps:** update dependency org.springframework.boot:spring-boot-starter-parent to v4.0.6 ([#69](https://github.com/hobynye/thank-you-matcher-service/issues/69)) ([feb7b1f](https://github.com/hobynye/thank-you-matcher-service/commit/feb7b1fd313e51768600ee53779166171de2579e))
+
+# [1.1.0-beta.5](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.0-beta.4...v1.1.0-beta.5) (2026-05-06)
+
+
+### Features
+
+* add spreadsheet upload endpoints ([#72](https://github.com/hobynye/thank-you-matcher-service/issues/72)) ([80b4791](https://github.com/hobynye/thank-you-matcher-service/commit/80b47914baeaa96a4488a0250fb08469fb2ed210))
+
+# [1.1.0-beta.4](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.0-beta.3...v1.1.0-beta.4) (2026-05-06)
+
+
+### Features
+
+* align supporter schema with 2026 income spreadsheet format ([#71](https://github.com/hobynye/thank-you-matcher-service/issues/71)) ([5ffadb2](https://github.com/hobynye/thank-you-matcher-service/commit/5ffadb25b38ffed2e0891c6c5cd2be739ee492e5))
+
+# [1.1.0-beta.3](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.0-beta.2...v1.1.0-beta.3) (2026-05-05)
+
+
+### Bug Fixes
+
+* **ci:** use RELEASE_TOKEN for semantic-release to bypass main branch rules ([#70](https://github.com/hobynye/thank-you-matcher-service/issues/70)) ([08bec0f](https://github.com/hobynye/thank-you-matcher-service/commit/08bec0f57db09d85b0cdaa10ef6c7684a104e567))
+
+# [1.1.0-beta.2](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.0-beta.1...v1.1.0-beta.2) (2026-05-05)
+
+
+### Features
+
+* add domain model — entities, repositories, and Flyway migration ([#62](https://github.com/hobynye/thank-you-matcher-service/issues/62)) ([511f568](https://github.com/hobynye/thank-you-matcher-service/commit/511f568b626285b7e72e4aedcb42df4414bb7564))
+
 # [1.1.0-beta.1](https://github.com/hobynye/thank-you-matcher-service/compare/v1.0.1...v1.1.0-beta.1) (2026-03-31)
 
 
