@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.2...v1.1.3) (2026-05-08)
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.apache.poi:poi-ooxml to v5.5.1 ([#80](https://github.com/hobynye/thank-you-matcher-service/issues/80)) ([95ad859](https://github.com/hobynye/thank-you-matcher-service/commit/95ad859b2dfc2ac78268eaca50e0ee4b551d3824))
+
 ## [1.1.2](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.1...v1.1.2) (2026-05-07)
 
 
