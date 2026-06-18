@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.3...v1.1.4) (2026-06-18)
+
+
+### Bug Fixes
+
+* **deps:** update spring-boot to v4.1.0 ([#96](https://github.com/hobynye/thank-you-matcher-service/issues/96)) ([9f9f984](https://github.com/hobynye/thank-you-matcher-service/commit/9f9f98453e74e4adfda1f0916d115dc8ef3232d8))
+
 ## [1.1.3](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.2...v1.1.3) (2026-05-08)
 
 
