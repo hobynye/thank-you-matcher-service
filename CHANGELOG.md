@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.4...v1.1.5) (2026-09-14)
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.springframework.boot:spring-boot-starter-parent to v4.1.1 ([#123](https://github.com/hobynye/thank-you-matcher-service/issues/123)) ([94d7bce](https://github.com/hobynye/thank-you-matcher-service/commit/94d7bcefa7d94e4b01eb3bdbfb5fe91e9e71b8f4))
+
 ## [1.1.4](https://github.com/hobynye/thank-you-matcher-service/compare/v1.1.3...v1.1.4) (2026-06-18)
 
 
