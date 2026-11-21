@@ -27,7 +27,7 @@
 
     <jacoco.version>0.8.16</jacoco.version>
 
-    <sonar.version>5.8.0.7211</sonar.version>
+    <sonar.version>5.9.0.7382</sonar.version>
     <skipUTs>false</skipUTs>
     <skipITs>false</skipITs>
 
