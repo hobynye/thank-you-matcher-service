@@ -1,5 +1,5 @@
 # ---- build stage ----
-FROM maven:3.10.0-eclipse-temurin-21 AS build
+FROM maven:3.10.2-eclipse-temurin-21 AS build
 WORKDIR /app
 
 # Leverage Docker layer caching
